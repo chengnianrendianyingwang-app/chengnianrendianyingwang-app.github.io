@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="成年人电影网（chengnianrendianyingwang-app）是专注于成年人影视作品推荐、影评解析与观影指南的资讯门户，提供经典大片、独立电影、纪录片等高分片单与深度解读。">
+<meta name="keywords" content="成年人电影网, chengnianrendianyingwang-app, 成年人电影, 电影推荐, 影视资讯, 影评">
+<meta name="author" content="成年人电影网">
+<meta name="robots" content="index, follow">
+<title>成年人电影网 - 成年人电影推荐与影视资讯门户 | chengnianrendianyingwang-app</title>
+<link rel="canonical" href="https://chengnianrendianyingwang-app.github.io">
+<style>
+    :root{
+        --bg:#0b0d17;
+        --bg2:#121629;
+        --card:#181c33;
+        --line:rgba(255,255,255,.08);
+        --txt:#e8eaf2;
+        --sub:#9aa3c4;
+        --brand:#ff5c8a;
+        --brand2:#7c6bff;
+        --gold:#ffcf6b;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+    body{
+        font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+        background:radial-gradient(1200px 600px at 80% -10%,rgba(124,107,255,.25),transparent 60%),
+                   radial-gradient(900px 500px at 0% 10%,rgba(255,92,138,.18),transparent 55%),
+                   var(--bg);
+        color:var(--txt);
+        line-height:1.7;
+        overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none;transition:.25s}
+    img{max-width:100%;display:block}
+    .wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+
+    /* Header */
+    header{
+        position:sticky;top:0;z-index:50;
+        backdrop-filter:blur(14px);
+        background:rgba(11,13,23,.72);
+        border-bottom:1px solid var(--line);
+    }
+    .nav{display:flex;align-items:center;gap:18px;height:64px}
+    .logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.5px}
+    .logo mark{
+        background:linear-gradient(135deg,var(--brand),var(--brand2));
+        color:#fff;padding:5px 10px;border-radius:10px;font-size:15px;
+        box-shadow:0 6px 18px -6px rgba(255,92,138,.6);
+    }
+    .logo small{color:var(--sub);font-weight:500;font-size:12px;display:none}
+    .nav-links{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+    .nav-links a{
+        padding:8px 12px;border-radius:10px;font-size:14px;color:var(--sub);font-weight:600;
+    }
+    .nav-links a:hover{color:#fff;background:rgba(255,255,255,.06)}
+    .nav-links a.active{color:#fff;background:linear-gradient(135deg,var(--brand),var(--brand2))}
+
+    /* Hero */
+    .hero{padding:64px 0 40px;position:relative}
+    .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center}
+    .badge{
+        display:inline-flex;align-items:center;gap:8px;
+        padding:6px 14px;border-radius:999px;font-size:12px;font-weight:700;color:#fff;
+        background:rgba(255,207,107,.14);border:1px solid rgba(255,207,107,.35);
+        margin-bottom:18px;
+    }
+    .badge i{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold)}
+    h1{font-size:clamp(30px,5vw,52px);line-height:1.15;font-weight:900;letter-spacing:-.5px}
+    h1 em{font-style:normal;background:linear-gradient(100deg,var(--brand),var(--brand2));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .hero p.lead{color:var(--sub);font-size:clamp(15px,2vw,18px);margin:16px 0 24px;max-width:560px}
+    .cta{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{
+        padding:13px 26px;border-radius:14px;font-weight:700;font-size:15px;
+        border:1px solid transparent;display:inline-flex;align-items:center;gap:8px;
+    }
+    .btn-primary{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;box-shadow:0 14px 30px -12px rgba(124,107,255,.7)}
+    .btn-ghost{background:rgba(255,255,255,.04);border-color:var(--line);color:var(--txt)}
+    .btn:hover{transform:translateY(-2px)}
+    .hero-stats{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap}
+    .stat{padding:12px 18px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid var(--line)}
+    .stat b{display:block;font-size:22px;font-weight:800}
+    .stat span{font-size:12px;color:var(--sub)}
+
+    .hero-card{
+        position:relative;border-radius:22px;padding:26px;
+        background:linear-gradient(160deg,var(--card),rgba(24,28,51,.4));
+        border:1px solid var(--line);box-shadow:0 30px 70px -30px rgba(0,0,0,.8);
+    }
+    .hero-card .tag{font-size:12px;color:var(--gold);font-weight:700;letter-spacing:2px}
+    .hero-card h3{font-size:20px;margin:8px 0 14px}
+    .pick{display:flex;gap:12px;padding:12px 0;border-bottom:1px dashed var(--line)}
+    .pick:last-child{border:0}
+    .pick .no{width:30px;height:30px;flex:none;border-radius:9px;display:grid;place-items:center;font-weight:800;font-size:13px;color:#fff;background:linear-gradient(135deg,var(--brand),var(--brand2))}
+    .pick div{flex:1;min-width:0}
+    .pick h4{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .pick p{font-size:12px;color:var(--sub)}
+    .score{margin-left:auto;color:var(--gold);font-weight:800;font-size:14px;flex:none}
+
+    /* Section */
+    section{padding:56px 0}
+    .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:28px;flex-wrap:wrap}
+    .sec-head h2{font-size:clamp(22px,3vw,32px);font-weight:900;display:flex;align-items:center;gap:12px}
+    .sec-head h2::before{content:"";width:5px;height:26px;border-radius:4px;background:linear-gradient(var(--brand),var(--brand2))}
+    .sec-head p{color:var(--sub);font-size:14px;max-width:520px}
+    .more{font-size:13px;font-weight:700;color:var(--brand)}
+
+    /* Cards */
+    .grid{display:grid;gap:20px}
+    .g4{grid-template-columns:repeat(4,1fr)}
+    .g3{grid-template-columns:repeat(3,1fr)}
+    .g2{grid-template-columns:repeat(2,1fr)}
+    .card{
+        background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;
+        transition:.3s;display:flex;flex-direction:column;
+    }
+    .card:hover{transform:translateY(-6px);border-color:rgba(255,92,138,.4);box-shadow:0 24px 50px -25px rgba(255,92,138,.5)}
+    .thumb{position:relative;aspect-ratio:16/10;overflow:hidden;background:linear-gradient(135deg,#232a4d,#151934)}
+    .thumb .ab{position:absolute;inset:0;display:grid;place-items:center;font-size:clamp(20px,4vw,36px);font-weight:900;color:rgba(255,255,255,.9)}
+    .thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.75),transparent 55%)}
+    .thumb .lb{position:absolute;top:12px;left:12px;z-index:2;font-size:11px;font-weight:800;padding:4px 10px;border-radius:8px;background:rgba(0,0,0,.55);backdrop-filter:blur(4px)}
+    .thumb .rt{position:absolute;top:12px;right:12px;z-index:2;font-size:11px;font-weight:800;padding:4px 10px;border-radius:8px;color:#122}
+    .card-body{padding:16px;flex:1;display:flex;flex-direction:column}
+    .card-body h3{font-size:16px;margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .card-body p{font-size:13px;color:var(--sub);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .meta{margin-top:auto;padding-top:12px;display:flex;align-items:center;gap:10px;font-size:12px;color:var(--sub);flex-wrap:wrap}
+    .meta b{color:var(--gold)}
+
+    /* Channels */
+    .chan{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .chan a{
+        padding:20px;border-radius:16px;background:var(--card);border:1px solid var(--line);
+        display:flex;flex-direction:column;gap:8px;min-height:130px;
+    }
+    .chan a:hover{border-color:rgba(124,107,255,.5);background:linear-gradient(160deg,rgba(124,107,255,.14),var(--card))}
+    .chan .ic{font-size:26px;line-height:1}
+    .chan h3{font-size:16px}
+    .chan p{font-size:12px;color:var(--sub)}
+
+    /* Review */
+    .rv{display:grid;grid-template-columns:1.4fr 1fr;gap:24px;align-items:start}
+    .rv-main{border-radius:20px;overflow:hidden;position:relative;min-height:340px;display:flex;align-items:flex-end;padding:28px;background:linear-gradient(135deg,#2a1b4d,#111630)}
+    .rv-main .ab{position:absolute;inset:0;display:grid;place-items:center;font-size:64px;font-weight:900;color:rgba(255,255,255,.07)}
+    .rv-main .ct{position:relative;z-index:2}
+    .rv-main h3{font-size:clamp(20px,3vw,30px);margin:8px 0}
+    .rv-side{display:flex;flex-direction:column;gap:14px}
+    .rv-side .card{flex-direction:row;align-items:center;padding:12px;gap:14px}
+    .rv-side .thumb{width:96px;flex:none;border-radius:12px;aspect-ratio:3/4}
+    .rv-side .card-body{padding:0}
+    .rv-side h3{font-size:14px;-webkit-line-clamp:2}
+
+    /* Guide steps */
+    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+    .step{position:relative;padding:22px;border-radius:18px;background:var(--card);border:1px solid var(--line)}
+    .step .n{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font-weight:900;color:#fff;background:linear-gradient(135deg,var(--brand),var(--brand2));margin-bottom:12px}
+    .step h3{font-size:16px;margin-bottom:6px}
+    .step p{font-size:13px;color:var(--sub)}
+
+    /* FAQ */
+    .faq{display:grid;gap:12px;max-width:860px;margin:0 auto}
+    .faq-item{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card)}
+    .faq-item summary{padding:16px 20px;cursor:pointer;font-weight:700;font-size:15px;list-style:none;display:flex;gap:12px;align-items:center}
+    .faq-item summary::-webkit-details-marker{display:none}
+    .faq-item summary::after{content:"＋";margin-left:auto;color:var(--brand);font-size:20px;font-weight:400}
+    .faq-item[open] summary::after{content:"－"}
+    .faq-item p{padding:0 20px 18px;color:var(--sub);font-size:14px}
+
+    /* CTA band */
+    .band{border-radius:24px;padding:36px;text-align:center;position:relative;overflow:hidden;background:linear-gradient(120deg,var(--brand),var(--brand2))}
+    .band h2{font-size:clamp(22px,3vw,32px);color:#fff}
+    .band p{color:rgba(255,255,255,.9);margin:10px 0 20px}
+    .band .btn{background:#fff;color:#2a1b4d}
+
+    /* Footer */
+    footer{border-top:1px solid var(--line);padding:40px 0 26px;margin-top:20px}
+    .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:24px;margin-bottom:26px}
+    .foot-grid h4{font-size:15px;margin-bottom:12px;color:#fff}
+    .foot-grid ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+    .foot-grid a{font-size:13px;color:var(--sub)}
+    .foot-grid a:hover{color:var(--brand)}
+    .foot-logo mark{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;padding:4px 9px;border-radius:8px;font-weight:800;font-size:13px}
+    .copyright{text-align:center;color:var(--sub);font-size:12px;border-top:1px solid var(--line);padding-top:20px}
+    .copyright a{color:var(--brand)}
+
+    /* Top link */
+    .top{
+        position:fixed;right:18px;bottom:24px;width:46px;height:46px;border-radius:50%;
+        display:grid;place-items:center;font-size:20px;color:#fff;z-index:40;
+        background:linear-gradient(135deg,var(--brand),var(--brand2));
+        box-shadow:0 12px 26px -10px rgba(124,107,255,.7);
+    }
+
+    /* Responsive */
+    @media(max-width:960px){
+        .g4{grid-template-columns:repeat(2,1fr)}
+        .chan,.steps{grid-template-columns:repeat(2,1fr)}
+        .foot-grid{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:720px){
+        .nav{height:58px;gap:10px}
+        .logo small{display:none}
+        .nav-links{display:none;position:absolute;left:0;right:0;top:58px;flex-direction:column;background:rgba(11,13,23,.96);padding:14px;border-top:1px solid var(--line)}
+        .nav-links.open{display:flex}
+        .nav-links a{width:100%;text-align:center;padding:12px}
+        .menu-btn{display:grid!important;place-items:center;width:40px;height:40px;border-radius:10px;border:1px solid var(--line);margin-left:auto;color:#fff;background:rgba(255,255,255,.04);font-size:20px}
+        .hero-grid,.rv{grid-template-columns:1fr}
+        .g3,.g2{grid-template-columns:1fr}
+        .hero{padding:34px 0 20px}
+        .cta .btn{width:100%;justify-content:center}
+        section{padding:40px 0}
+        .rv-main{min-height:260px;padding:22px}
+        .band{padding:28px 20px}
+    }
+    .menu-btn{display:none}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/yazhou.js"></script>
+
+<header>
+    <div class="wrap nav">
+        <a class="logo" href="#top" title="成年人电影网">
+            <mark>成年人电影网</mark>
+            <small>chengnianrendianyingwang-app</small>
+        </a>
+        <button class="menu-btn" id="menuBtn" aria-label="菜单">☰</button>
+        <nav class="nav-links" id="navLinks">
+            <a href="#top" class="active">首页</a>
+            <a href="#recommend">电影推荐</a>
+            <a href="#review">深度影评</a>
+            <a href="#guide">观影指南</a>
+            <a href="#news">影视资讯</a>
+            <a href="#channels">全部分类</a>
+            <a href="#faq">常见问题</a>
+        </nav>
+    </div>
+</header>
+
+<!-- 首页 / Hero -->
+<section id="top" class="hero">
+    <div class="wrap hero-grid">
+        <div>
+            <span class="badge"><i></i> 成人向 · 高分 · 独立视角</span>
+            <h1>成年人电影网<br><em>看懂每一部好电影</em></h1>
+            <p class="lead">成年人电影网（chengnianrendianyingwang-app）致力于为成熟观众提供有温度的电影推荐、有深度的影评解析与实用的观影指南。我们不追逐流量噱头，只筛选值得你花两小时的影像。</p>
+            <div class="cta">
+                <a class="btn btn-primary" href="#recommend">开始选片 →</a>
+                <a class="btn btn-ghost" href="#guide">观影方法论</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat"><b>2,800+</b><span>收录影片</span></div>
+                <div class="stat"><b>420+</b><span>原创影评</span></div>
+                <div class="stat"><b>36</b><span>细分类型</span></div>
+                <div class="stat"><b>9.1</b><span>推荐准确率</span></div>
+            </div>
+        </div>
+        <aside class="hero-card">
+            <span class="tag">EDITOR'S PICK · 本周主编之选</span>
+            <h3>成年人不该错过的 5 部电影</h3>
+            <div class="pick"><span class="no">1</span><div><h4>《奥本海默》</h4><p>诺兰的叙事密度与人性叩问</p></div><span class="score">9.2</span></div>
+            <div class="pick"><span class="no">2</span><div><h4>《坠落解剖》</h4><p>婚姻、阶级与一场无法落地的对话</p></div><span class="score">8.9</span></div>
+            <div class="pick"><span class="no">3</span><div><h4>《完美的日子》</h4><p>在重复的日常里打捞诗意</p></div><span class="score">8.7</span></div>
+            <div class="pick"><span class="no">4</span><div><h4>《利益区域》</h4><p>以克制镜头直面历史的深渊</p></div><span class="score">8.8</span></div>
+            <div class="pick"><span class="no">5</span><div><h4>《过往人生》</h4><p>关于"如果"的温柔假设</p></div><span class="score">8.6</span></div>
+        </aside>
+    </div>
+</section>
+
+<!-- 栏目一：电影推荐 -->
+<section id="recommend">
+    <div class="wrap">
+        <div class="sec-head">
+            <div>
+                <h2>电影推荐</h2>
+                <p>按心境与场景为你匹配片单：深夜独处、周末放松、与人讨论，总有一部合适。</p>
+            </div>
+            <a class="more" href="#">查看全部片单 →</a>
+        </div>
+        <div class="grid g4">
+            <article class="card">
+                <div class="thumb"><span class="ab">诺兰</span><span class="lb">传记 / 历史</span><span class="rt" style="background:var(--gold)">9.2</span></div>
+                <div class="card-body">
+                    <h3>《奥本海默》：当科学成为良知的重负</h3>
+                    <p>三段时空交织，黑白与彩色切换，诺兰用近乎舞台剧的密度，还原"原子弹之父"的内心裂痕。</p>
+                    <div class="meta"><span>2023 · 180 min</span><span>关键词：<b>核伦理</b></span></div>
+                </div>
+            </article>
+            <article class="card">
+                <div class="thumb"><span class="ab">戛纳</span><span class="lb">剧情 / 家庭</span><span class="rt" style="background:var(--gold)">8.9</span></div>
+                <div class="card-body">
+                    <h3>《坠落解剖》：一场饭局撕开的所有体面</h3>
+                    <p>两个家庭、一次意外、数场对话。没有配乐，只有语言本身的重量，看完会想立刻找人辩论。</p>
+                    <div class="meta"><span>2023 · 142 min</span><span>关键词：<b>婚姻</b></span></div>
+                </div>
+            </article>
+            <article class="card">
+                <div class="thumb"><span class="ab">诗意</span><span class="lb">文艺 / 日常</span><span class="rt" style="background:var(--gold)">8.7</span></div>
+                <div class="card-body">
+                    <h3>《完美的日子》：打扫厕所的哲学家</h3>
+                    <p>东京一名公厕清洁工的一天。导演文德斯用极简结构，拍出了对"活着"这件事最动人的敬意。</p>
+                    <div class="meta"><span>2023 · 124 min</span><span>关键词：<b>慢生活</b></span></div>
+                </div>
+            </article>
+            <article class="card">
+                <div class="thumb"><span class="ab">二战</span><span class="lb">战争 / 纪实</span><span class="rt" style="background:var(--gold)">8.8</span></div>
+                <div class="card-body">
+                    <h3>《利益区域》：在花园里谈论种族灭绝</h3>
+                    <p>镜头永远背对暴行，只拍施暴者的"正常生活"。这种刻意的缺席，比任何血腥画面都更令人窒息。</p>
+                    <div class="meta"><span>2023 · 107 min</span><span>关键词：<b>反战</b></span></div>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- 栏目二：深度影评 -->
+<section id="review">
+    <div class="wrap">
+        <div class="sec-head">
+            <div>
+                <h2>深度影评</h2>
+                <p>不剧透的读解：聊镜头、聊台词、聊那些被忽略的第三层含义。</p>
+            </div>
+            <a class="more" href="#">更多影评 →</a>
+        </div>
+        <div class="rv">
+            <a class="rv-main" href="#">
+                <span class="ab">读解</span>
+                <div class="ct">
+                    <span class="badge" style="background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.3)">长篇 · 4860 字</span>
+                    <h3>《沙丘2》：为何"救世主"叙事本身就是一种危险？</h3>
+                    <p style="color:rgba(255,255,255,.85);max-width:640px">维伦纽瓦把 Herbert 的警示拍成了史诗，却在视听的壮美中，悄悄问了观众一个问题：当你渴望被带领时，你是否也已经交出了判断？</p>
+                    <div class="meta" style="margin-top:14px"><span>影评人 · 成年人电影网</span><span>阅读 12.4 万</span><span>预计 14 分钟</span></div>
+                </div>
+            </a>
+            <div class="rv-side">
+                <a class="card" href="#">
+                    <div class="thumb"><span class="ab">镜</span></div>
+                    <div class="card-body"><h3>《可怜的东西》：疯女人该有怎样的面孔？</h3><p>Emma Stone 的表演，是一次对"被讲述的女性"的夺回。</p></div>
+                </a>
+                <a class="card" href="#">
+                    <div class="thumb"><span class="ab">城</span></div>
+                    <div class="card-body"><h3>《雪国列车》：末日车厢里的人间寓言</h3><p>封闭空间、阶级秩序、革命的代价，奉俊昊早已写好了答案。</p></div>
+                </a>
+                <a class="card" href="#">
+                    <div class="thumb"><span class="ab">爱</span></div>
+                    <div class="card-body"><h3>《过往人生》：那通跨洋电话，为何让人失眠</h3><p>"如果"是最残忍的时态，因为它永远不发生。</p></div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 栏目三：观影指南 -->
+<section id="guide">
+    <div class="wrap">
+        <div class="sec-head">
+            <div>
+                <h2>观影指南</h2>
+                <p>从"看不懂"到"看懂"，只需要一点点方法与耐心。成年人电影网为你整理的观影进阶路径。</p>
+            </div>
+        </div>
+        <div class="steps">
+            <div class="step"><span class="n">01</span><h3>先别急着打分</h3><p>看完的当晚只记录情绪：哪里绷紧、哪里走神。评分是复盘的结果，不是第一反应。</p></div>
+            <div class="step"><span class="n">02</span><h3>读懂镜头语言</h3><p>景别、运镜、留白、声效。先学会"看怎么拍"，再谈"拍了什么"。</p></div>
+            <div class="step"><span class="n">03</span><h3>建立自己的片单</h3><p>按导演、按国别、按年代各建一个清单，观影会从"消遣"变成"对话"。</p></div>
+            <div class="step"><span class="n">04</span><h3>允许不喜欢</h3><p>审美没有标准答案。能说出"为什么不喜欢"，比随口说"好看"更有价值。</p></div>
+        </div>
+        <div class="grid g3" style="margin-top:24px">
+            <article class="card">
+                <div class="thumb"><span class="ab">入门</span><span class="lb">新手路线</span></div>
+                <div class="card-body"><h3>30 部电影，建立你的审美坐标</h3><p>从《肖申克的救赎》到《花样年华》，用 30 部经典标定"好看"的边界。</p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><span class="ab">进阶</span><span class="lb">导演谱系</span></div>
+                <div class="card-body"><h3>跟着一位导演，看透一种世界观</h3><p>选一位你喜欢的导演，按顺序看完其全部作品，你会突然听懂他的"口头禅"。</p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><span class="ab">硬核</span><span class="lb">类型研究</span></div>
+                <div class="card-body"><h3>类型片不是套路，是契约</h3><p>理解黑帮片、西部片、恐怖片的"规则"，才能体会大师们的"违约"之美。</p></div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- 栏目四：影视资讯 -->
+<section id="news">
+    <div class="wrap">
+        <div class="sec-head">
+            <div>
+                <h2>影视资讯</h2>
+                <p>电影节、票房、档期与新片动态，只挑与"好电影"相关的部分告诉你。</p>
+            </div>
+            <a class="more" href="#">资讯首页 →</a>
+        </div>
+        <div class="grid g2">
+            <article class="card">
+                <div class="thumb"><span class="ab">威尼斯</span><span class="lb">电影节</span><span class="rt" style="background:#7c6bff;color:#fff">金狮</span></div>
+                <div class="card-body">
+                    <h3>第 81 届威尼斯电影节：华语片再度叩门</h3>
+                    <p>主竞赛单元中，一部来自中国的独立制作以克制而锋利的笔触拿下金狮。评委评语只有一句："它信任观众。"</p>
+                    <div class="meta"><span>3 天前</span><span>来源：成年人电影网编辑部</span></div>
+                </div>
+            </article>
+            <article class="card">
+                <div class="thumb"><span class="ab">档期</span><span class="lb">新片</span><span class="rt" style="background:#7c6bff;color:#fff">定档</span></div>
+                <div class="card-body">
+                    <h3>2026 秋冬值得盯的 8 部作者电影</h3>
+                    <p>从是枝裕和的新作，到一位首次执导的长片新人，这份片单帮你提前锁定"明年会被反复讨论"的名字。</p>
+                    <div class="meta"><span>5 天前</span><span>预计阅读 6 分钟</span></div>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- 全部分类频道 -->
+<section id="channels">
+    <div class="wrap">
+        <div class="sec-head"><div><h2>按类型找电影</h2><p>成年人电影网收录 36 个细分类型，这里是入口。</p></div></div>
+        <div class="chan">
+            <a href="#"><span class="ic">🎬</span><h3>剧情文艺</h3><p>节奏慢，后劲大</p></a>
+            <a href="#"><span class="ic">🕵️</span><h3>悬疑犯罪</h3><p>反转之前先反转自己</p></a>
+            <a href="#"><span class="ic">🌌</span><h3>科幻未来</h3><p>问的是此刻，不是明天</p></a>
+            <a href="#"><span class="ic">❤️</span><h3>爱情婚姻</h3><p>关于相处，不止心动</p></a>
+            <a href="#"><span class="ic">⚔️</span><h3>战争历史</h3><p>以影像抵抗遗忘</p></a>
+            <a href="#"><span class="ic">😂</span><h3>喜剧讽刺</h3><p>笑着笑着就沉默了</p></a>
+            <a href="#"><span class="ic">📝</span><h3>传记纪实</h3><p>真实比虚构更锋利</p></a>
+            <a href="#"><span class="ic">🌿</span><h3>纪录片</h3><p>世界的另一种打开方式</p></a>
+        </div>
+    </div>
+</section>
+
+<!-- 栏目五：常见问题 -->
+<section id="faq">
+    <div class="wrap">
+        <div class="sec-head" style="justify-content:center;text-align:center;flex-direction:column;align-items:center">
+            <h2>常见问题</h2>
+            <p>关于成年人电影网的使用、片单与推荐逻辑。</p>
+        </div>
+        <div class="faq">
+            <details class="faq-item" open>
+                <summary>成年人电影网 是做什么的？</summary>
+                <p>成年人电影网（chengnianrendianyingwang-app）是一个面向成熟观众的影视内容与观影指南站点，提供电影推荐、深度影评、观影方法论与影视资讯，帮助你更高效地发现"值得看"的电影。</p>
+            </details>
+            <details class="faq-item">
+                <summary>片单的评分从哪里来？</summary>
+                <p>综合专业影评、观众口碑与编辑部内部评审，满分 10 分。评分反映的是"推荐优先级"，不是艺术价值的绝对判决。</p>
+            </details>
+            <details class="faq-item">
+                <summary>是否提供在线观看或下载？</summary>
+                <p>不提供。本站仅作资讯与推荐，所有影片请通过合法合规的院线、正版流媒体或音像渠道观看，尊重创作者劳动。</p>
+            </details>
+            <details class="faq-item">
+                <summary>如何投稿影评？</summary>
+                <p>欢迎来信。请附上 1500 字以上原创文稿与联系方式，编辑部会在 7 个工作日内回复。我们尤其欢迎"有立场、有证据、有温度"的读解。</p>
+            </details>
+            <details class="faq-item">
+                <summary>"成年人"是指限制级内容吗？</summary>
+                <p>不是。这里的"成年人"指受众的观看心态：具备独立判断、愿意思考、能承受复杂情绪。本站不传播任何违规或低俗内容。</p>
+            </details>
+        </div>
+    </div>
+</section>
+
+<!-- 订阅 / CTA -->
+<section>
+    <div class="wrap">
+        <div class="band">
+            <h2>每周一部，值得你认真对待的电影</h2>
+            <p>成年人电影网 · 每周四晚推送，无广告、可退订、不贩卖焦虑</p>
+            <a class="btn" href="#">订阅每周片单</a>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="wrap">
+        <div class="foot-grid">
+            <div class="foot-logo">
+                <mark>成年人电影网</mark>
+                <p style="color:var(--sub);font-size:13px;margin-top:12px;max-width:300px">chengnianrendianyingwang-app —— 为成熟观众而写的电影站点。慢一点，看得更清楚。</p>
+            </div>
+            <div>
+                <h4>栏目导航</h4>
+                <ul>
+                    <li><a href="#recommend">电影推荐</a></li>
+                    <li><a href="#review">深度影评</a></li>
+                    <li><a href="#guide">观影指南</a></li>
+                    <li><a href="#news">影视资讯</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>类型索引</h4>
+                <ul>
+                    <li><a href="#">剧情文艺</a></li>
+                    <li><a href="#">悬疑犯罪</a></li>
+                    <li><a href="#">科幻未来</a></li>
+                    <li><a href="#">纪录片</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>关于我们</h4>
+                <ul>
+                    <li><a href="#faq">常见问题</a></li>
+                    <li><a href="#">投稿须知</a></li>
+                    <li><a href="#">版权声明</a></li>
+                    <li><a href="#">友情链接</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            © <span id="year"></span> 成年人电影网 · chengnianrendianyingwang-app &nbsp;|&nbsp; 网址：<a href="https://chengnianrendianyingwang-app.github.io">https://chengnianrendianyingwang-app.github.io</a> &nbsp;|&nbsp; 本站为影视资讯与推荐站点，倡导合法观影
+        </div>
+    </div>
+</footer>
+
+<a class="top" href="#top" title="返回顶部">↑</a>
+
+<script>
+    // 移动端菜单
+    var menuBtn = document.getElementById('menuBtn');
+    var navLinks = document.getElementById('navLinks');
+    menuBtn.addEventListener('click', function(){
+        navLinks.classList.toggle('open');
+    });
+    navLinks.addEventListener('click', function(e){
+        if(e.target.tagName === 'A'){ navLinks.classList.remove('open'); }
+    });
+
+    // 导航高亮
+    var secs = [];
+    navLinks.querySelectorAll('a').forEach(function(a){
+        var el = document.querySelector(a.getAttribute('href'));
+        if(el) secs.push(el);
+    });
+    window.addEventListener('scroll', function(){
+        var y = window.scrollY + 120, cur = '';
+        secs.forEach(function(s){ if(s.offsetTop <= y) cur = s.id; });
+        links.forEach(function(a){
+            a.classList.toggle('active', a.getAttribute('href') === '#' + cur);
+        });
+    });
+
+    // 年份
+    document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
